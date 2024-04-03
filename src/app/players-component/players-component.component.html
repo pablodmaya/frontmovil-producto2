@@ -1,0 +1,22 @@
+<div class="searchDiv">
+  <div class="search">
+    <div class="element">
+      <input type="text" [(ngModel)]="filtername" placeholder="Buscar jugador"/>
+    </div>
+  </div>
+  <div class="search">
+    <div class="element">
+      <input type="number" class="no-spinners" [(ngModel)]="filterage" placeholder="Buscar por edad"/>
+    </div>
+    <div class="element">
+      <select   type="text" [(ngModel)]="filterposition">
+       <option selected value="">Buscar por posición</option> 
+       <option  *ngFor="let position of positions" [value]="position">{{ position }}</option>
+      </select>
+    </div>
+  </div>
+</div>
+<!-- Utiliza el pipe de búsqueda por edad al iterar sobre los jugadores -->
+<div class="players">
+  <app-player-component [player]="player" *ngFor="let player of players | ageFilter: +filterage | nameFilter: filtername | positionFilter: filterposition"></app-player-component>
+</div>

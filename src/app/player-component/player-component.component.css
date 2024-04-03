@@ -1,0 +1,25 @@
+.playercontainer {
+    background-color: rgb(209, 209, 209);
+    border-radius: 8px;
+    margin-bottom: 25px;
+}
+
+.player {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-top: 1rem;
+
+}
+
+.player img {
+    display: block;
+    width: 10%;
+    height: auto;
+    min-width: 100px;
+}
+
+.player svg{
+    width: 2rem;
+    cursor: pointer;
+}
