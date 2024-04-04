@@ -23,3 +23,17 @@
     width: 2rem;
     cursor: pointer;
 }
+
+.eliminar{
+    display: flex;           /*Flexbox, disponer elementos en secuencia horizontal o vertical*/
+    align-items: center;     /*Centramos la X en el círculo*/                                            
+    justify-content: center;  
+    position: absolute;      /*ubicar el círculo donde queramos*/  
+    top: -0.75rem;
+    right: -0.75rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 20px;     /*Bordes redondeados el círculo se hace redondo*/
+    color: white;          /*X blanca y fondo rojo*/
+    background-color: red; 
+}

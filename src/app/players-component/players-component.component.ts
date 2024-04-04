@@ -25,6 +25,10 @@ import { AppModule } from '../app.module';
 })
 export class PlayersComponentComponent {
 
+  crearJugador() {
+    throw new Error('Method not implemented.');
+    }
+
   players = PLAYERS;
   selectedPlayer?: Player;
   filterage: string = '';
