@@ -10,14 +10,33 @@ import { PlayerComponentComponent } from './player-component/player-component.co
 import { MediaComponentComponent } from './media-component/media-component.component';
 import { positionFilterPipe } from './pipes/position.filter.pipe';
 
+import { FirestoreModule, provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideStorage,getStorage } from '@angular/fire/storage';
+
 @NgModule({
-  declarations: [
+  declarations: [  
     ageFilterPipe, // Declara tu pipe aquí
     nameFilterPipe,
     positionFilterPipe
   ],
+
+  imports: [
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirestore(() => getFirestore()),
+   // BrowserModule,
+    FirestoreModule,
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
+    provideStorage(() => getStorage()),
+    FormsModule
+  ],
+
   providers: [],
-  bootstrap: [],
+  bootstrap: [AppComponent],
   exports: [
     ageFilterPipe,
     nameFilterPipe,
