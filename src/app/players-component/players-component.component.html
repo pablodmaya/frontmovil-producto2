@@ -17,6 +17,6 @@
   </div>
 </div>
 <!-- Utiliza el pipe de búsqueda por edad al iterar sobre los jugadores -->
-<div class="players">
-  <app-player-component [player]="player" *ngFor="let player of players | ageFilter: +filterage | nameFilter: filtername | positionFilter: filterposition"></app-player-component>
+<div class="players" *ngIf="player$ | async as players">
+  <app-player-component [player]="player" *ngFor="let player of players  | ageFilter: +filterage | nameFilter: filtername | positionFilter: filterposition"></app-player-component>
 </div>
