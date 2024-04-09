@@ -30,5 +30,5 @@ export class PlayersComponentComponent {
   filterage: string = '';
   filtername: string = '';
   filterposition: string = '';
-  positions: string[] = ["Base", "Escolta", "Alero", "Pivot"];
+  positions: string[] = ["Base", "Escolta", "Alero", "Pivot", "Delantero", "Guardian"];
 }  
