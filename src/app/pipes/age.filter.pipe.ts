@@ -7,6 +7,6 @@ export class ageFilterPipe implements PipeTransform {
     if (!players || !age) {
       return players;
     }
-    return players.filter(player => player.age.toString().includes(age.toString()));
+    return players.filter(player => player.age.toString(age.toString()));
   }
 }
