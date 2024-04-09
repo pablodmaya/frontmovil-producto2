@@ -20,3 +20,7 @@
 <div class="players" *ngIf="player$ | async as players">
   <app-player-component [player]="player" *ngFor="let player of players  | ageFilter: +filterage | nameFilter: filtername | positionFilter: filterposition"></app-player-component>
 </div>
+
+<form onclick="">
+  <input type="file" name="photo">
+</form>
