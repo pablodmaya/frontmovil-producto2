@@ -9,4 +9,7 @@ export interface Player {
     video: string,
     points: number,
     assists: number,
+    blocks: number,
+    rebounds: number,
+    steals: number,
   }
