@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DetailComponent } from './detail-component.component';
+import { MediaComponentComponent } from './media_component.component';
 
-describe('DetailComponentComponent', () => {
-  let component: DetailComponent;
-  let fixture: ComponentFixture<DetailComponent>;
+describe('MediaComponentComponent', () => {
+  let component: MediaComponentComponent;
+  let fixture: ComponentFixture<MediaComponentComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DetailComponent]
+      imports: [MediaComponentComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(DetailComponent);
+    fixture = TestBed.createComponent(MediaComponentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -21,4 +21,3 @@ describe('DetailComponentComponent', () => {
     expect(component).toBeTruthy();
   });
 });
- 

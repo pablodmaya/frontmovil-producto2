@@ -18,9 +18,5 @@
 </div>
 <!-- Utiliza el pipe de búsqueda por edad al iterar sobre los jugadores -->
 <div class="players" *ngIf="player$ | async as players">
-  <app-player-component [player]="player" *ngFor="let player of players  | ageFilter: +filterage | nameFilter: filtername | positionFilter: filterposition"></app-player-component>
+  <app_player_component [player]="player" *ngFor="let player of players  | ageFilter: +filterage | nameFilter: filtername | positionFilter: filterposition"></app_player_component>
 </div>
-
-<form onclick="">
-  <input type="file" name="photo">
-</form>

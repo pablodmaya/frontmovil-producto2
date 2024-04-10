@@ -9,5 +9,6 @@
       <li><b>Asistencias:</b> {{ player.assists }}</li>
     </ul>
   </div>
-  <app-media-component *ngIf="play" [player]="player"></app-media-component>
+  <app_createPlayer_component></app_createPlayer_component>
+  <app_media_component *ngIf="play" [player]="player"></app_media_component>
 </div>
