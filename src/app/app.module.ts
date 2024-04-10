@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
-import { FirestoreModule, provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { FirestoreModule, provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
@@ -22,13 +22,13 @@ import { CommonModule } from '@angular/common';
   imports: [
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage()),
     //BrowserModule,
     CommonModule,
     FirestoreModule,
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     ReactiveFormsModule,
-    provideStorage(() => getStorage()),
     FormsModule
   ],
   providers: [],

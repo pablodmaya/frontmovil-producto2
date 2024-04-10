@@ -30,6 +30,7 @@ export class PlayerComponent {
                             //PlayerInterface?: PlayerInterface significa que PlayerInterface es opcional y puede ser undefined.
   onSelect(): void {
     this.open = !this.open;
+    console.log("hola");
   }  
   @Input() filteredPlayers: PlayerInterface[] = [];
 }

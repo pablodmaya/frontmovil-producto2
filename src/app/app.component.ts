@@ -3,7 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { PlayersListComponent } from './components/playersList_component/playersList_component.component';
 
 @Component({
-    selector: 'app-root',
+    selector: 'app_root',
     standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',

@@ -10,7 +10,7 @@ import { AppModule } from '../../app.module';
 import { inject } from '@angular/core';
 import { Firestore, collectionData, collection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-
+import { CreatePlayerComponentComponent } from '../createPlayer_component/createPlayer_component.component';
 
 @Component({
   standalone: true,
@@ -25,24 +25,19 @@ import { Observable } from 'rxjs';
     DetailComponent,
     PlayerComponent,
     AppModule,
-    CommonModule
+    CommonModule,
+    CreatePlayerComponentComponent
   ],
 })
 export class PlayersListComponent {
-
- // players = PLAYERS;
- 
- public player$: Observable<any[]>;
- firestore: Firestore = inject(Firestore);
-
- constructor() {
-   const playersCollection = collection(this.firestore, 'players');
-   this.player$ = collectionData(playersCollection);
- }
- 
- selectedPlayer?: PlayerInterface;
+  public player$: Observable<any[]>;
+  selectedPlayer?: PlayerInterface;
   filterage: string = '';
   filtername: string = '';
   filterposition: string = '';
   positions: string[] = ["Base", "Escolta", "Alero", "Pivot"];
-}  
+  constructor(private firestore: Firestore) {
+    const playersCollection = collection(this.firestore, 'players');
+    this.player$ = collectionData(playersCollection);
+  }
+}

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Storage, ref, uploadBytes } from '@angular/fire/storage';
 
 @Component({
   standalone: true,
@@ -8,4 +9,13 @@ import { Component } from '@angular/core';
 })
 
 export class CreatePlayerComponentComponent {
+  constructor(private storage: Storage) {} // Assuming you inject Storage in constructor
+
+  uploadImage($event: any){
+    const file = $event.target.files[0];
+    const imgRef = ref(this.storage, `assets/images/${file.name}`);
+    uploadBytes(imgRef, file)
+    .then(res => console.log(res))
+    .catch(e => console.log(e))
+  }
 }
