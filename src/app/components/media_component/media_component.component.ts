@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {NgIf, UpperCasePipe} from '@angular/common';
-import { Player } from '../../interface/player';
+import { PlayerInterface } from '../../interfaces/playerInterface';
 
 @Component({
   standalone: true,
@@ -11,5 +11,5 @@ import { Player } from '../../interface/player';
 })
 
 export class MediaComponentComponent {
-  @Input() player?: Player;
+  @Input() player?: PlayerInterface;
 }

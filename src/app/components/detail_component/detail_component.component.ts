@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { NgIf, UpperCasePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Player } from '../../interface/player';
+import { PlayerInterface } from '../../interfaces/playerInterface';
 import { MediaComponentComponent } from '../media_component/media_component.component';
 import { CreatePlayerComponentComponent } from '../createPlayer_component/createPlayer_component.component';
 
@@ -15,7 +15,7 @@ import { CreatePlayerComponentComponent } from '../createPlayer_component/create
 
 export class DetailComponent {
   play: boolean = false;
-  @Input() player?: Player;
+  @Input() player?: PlayerInterface;
   playVideo(): void{
     this.play = !this.play;
   }
