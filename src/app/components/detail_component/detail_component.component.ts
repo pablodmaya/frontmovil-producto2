@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { NgIf, UpperCasePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Player } from '../../player';
+import { Player } from '../../interface/player';
 import { MediaComponentComponent } from '../media_component/media_component.component';
 import { CreatePlayerComponentComponent } from '../createPlayer_component/createPlayer_component.component';
 

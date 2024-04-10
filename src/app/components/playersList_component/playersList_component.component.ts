@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgIf, NgFor, UpperCasePipe, CommonModule  } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { Player } from '../../player';
+import { Player } from '../../interface/player';
 import { DetailComponent } from '../detail_component/detail_component.component';
 import { PlayerComponent } from '../player_component/player_component.component';
 import { AppModule } from '../../app.module';

@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {NgIf, UpperCasePipe} from '@angular/common';
-import { Player } from '../../player';
+import { Player } from '../../interface/player';
 
 @Component({
   standalone: true,

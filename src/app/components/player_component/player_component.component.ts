@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Player } from '../../player';
+import { Player } from '../../interface/player';
 import { DetailComponent } from "../detail_component/detail_component.component";
 import { NgIf, NgFor, UpperCasePipe } from '@angular/common';
 
