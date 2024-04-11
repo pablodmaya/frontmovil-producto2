@@ -8,7 +8,10 @@
         </button>
       </div>
       <div class="modal-body">
-        <input type="file" (change)="uploadImage($event)">
+        <input type="file" (change)="onFileImgUpload($event)">
+        <button (click)="uploadImages()">Subir imagen</button>
+        <input type="file" (change)="onFileImgUpload($event)">
+        <button (click)="uploadVideo()">Subir video</button> 
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary">Save changes</button>
