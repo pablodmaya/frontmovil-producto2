@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Storage, ref, uploadBytes } from '@angular/fire/storage';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { Storage, listAll, ref, uploadBytes } from '@angular/fire/storage';
 
 @Component({
   standalone: true,
@@ -8,7 +8,7 @@ import { Storage, ref, uploadBytes } from '@angular/fire/storage';
   styleUrls: ['./createPlayer_component.component.css']
 })
 
-export class CreatePlayerComponent {
+export class CreatePlayerComponent{
 
   imgFileSelected = false;
   videoFileSelected = false;
@@ -18,37 +18,24 @@ export class CreatePlayerComponent {
   videoRef: any;
 
   constructor(private storage: Storage) {}
+  
   onFileImgUpload($event: any){
     this.imgFile = $event.target.files[0];
     if(this.imgFile != undefined){
-      const fileType = this.imgFile.type;
-      if (fileType !== 'image/png' && fileType !== 'image/jpeg') {
-        console.error("Invalid file type. Only PNG and JPEG images are allowed.");
-        return;
-      }
-      this.imgRef = ref(this.storage, `assets/images/${this.imgFile.name}`);
-      this.imgFileSelected = true;      
+      this.imgRef = ref(this.storage, `assets/images/${this.imgFile.name}`);  
     }else{
       this.imgFile = undefined;
       this.imgRef = undefined;
-      this.imgFileSelected = false;
     }
   }
 
   onFileVideoUpload($event: any){
     this.videoFile = $event.target.files[0];
     if(this.videoFile != undefined){
-      const fileType = this.videoFile.type;
-      if (fileType !== 'video/mp4') {
-        console.error("Invalid file type. Only MP4 videos are allowed.");
-        return;
-      }
       this.videoRef = ref(this.storage, `assets/video/${this.videoFile.name}`);
-      this.videoFileSelected = true;      
     }else{
       this.videoFile = undefined;
       this.videoRef = undefined;
-      this.videoFileSelected = false;
     }
   }
 
@@ -59,12 +46,12 @@ export class CreatePlayerComponent {
     }
     uploadBytes(this.imgRef, this.imgFile)
       .then(res => {
-        console.log("Upload successful:", res);
+        console.log("Imagen subida con exito.", res);
         this.imgFile = undefined;
         this.imgRef = undefined;
         this.imgFileSelected = false;
       })
-      .catch(e => console.error("Upload error:", e))
+      .catch(e => console.error("Fallo al subir la imagen: ", e))
   }
 
   uploadVideo(){
@@ -74,11 +61,17 @@ export class CreatePlayerComponent {
     }
     uploadBytes(this.videoRef, this.videoFile)
       .then(res => {
-        console.log("Upload successful:", res);
+        console.log("Video subido con exito.", res);
         this.videoFile = undefined;
         this.videoRef = undefined;
         this.videoFileSelected = false;
       })
-      .catch(e => console.error("Upload error:", e))
+      .catch(e => console.error("Fallo al subir el video: ", e))
+  }
+
+  @Output() closeCreatePlayer = new EventEmitter();
+
+  closeCreatePlayerModal() {
+    this.closeCreatePlayer.emit(false);
   }
 }

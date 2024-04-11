@@ -1,22 +1,60 @@
-<div class="modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
+<div class="modal" id="createPlayers" style="display: block;" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <h5 class="modal-title">Añadir jugador:</h5>
       </div>
       <div class="modal-body">
-        <input type="file" (change)="onFileImgUpload($event)">
-        <button (click)="uploadImages()">Subir imagen</button>
-        <input type="file" (change)="onFileImgUpload($event)">
-        <button (click)="uploadVideo()">Subir video</button> 
+        <form id="player-form">
+          <div class="mb-3">
+            <label for="name">Nombre:*</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+          </div>
+          <div class="mb-3">
+            <label for="surname">Apellido:*</label>
+            <input type="text" class="form-control" id="surname" name="surname" required>
+          </div>
+          <div class="mb-3">
+            <label for="age">Edad:*</label>
+            <input type="number" class="form-control" id="age" name="age" required>
+          </div>
+          <div class="mb-3">
+            <label for="position">Posición:*</label>
+            <select class="form-control" id="position" name="position" required>
+              <option value="Base">Base</option>
+              <option value="Escolta">Escolta</option>
+              <option value="Alero">Alero</option>
+              <option value="Pivot">Pivot</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="points">Puntos por partido:*</label>
+            <input type="number" class="form-control" id="points" name="points" required>
+          </div>
+          <div class="mb-3">
+            <label for="assists">Asistencias:*</label>
+            <input type="number" class="form-control" id="assists" name="assists" required>
+          </div>
+          <div class="mb-3">
+            <label for="height">Altura:*</label>
+            <input type="number" class="form-control" id="height" name="height" required>
+          </div>
+          <div class="mb-3">
+            <label for="onFileImgUpload">Imagen:*</label>
+            <input type="file" class="form-control" id="onFileImgUpload" name="onFileImgUpload" accept="image/png, image/jpeg" required>
+          </div>
+          <div class="mb-3">
+            <label for="onFileVideoUpload">Video:*</label>
+            <input type="file" class="form-control" id="onFileVideoUpload" name="onFileVideoUpload" accept="video/mp4" required>
+          </div>
+          <p>* Campo obligatorio.</p>
+        </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" disabled>Crear jugador</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeCreatePlayerModal()">Cerrar</button>
       </div>
     </div>
   </div>
 </div>
+<div class="modal-backdrop fade show"></div>

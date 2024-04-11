@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {NgIf, UpperCasePipe} from '@angular/common';
 import { PlayerInterface } from '../../interfaces/playerInterface';
 
@@ -12,4 +12,8 @@ import { PlayerInterface } from '../../interfaces/playerInterface';
 
 export class MediaComponentComponent {
   @Input() player?: PlayerInterface;
+  @Output() closeMedia = new EventEmitter();
+  closeMediaModal() {
+    this.closeMedia.emit(false);
+  }
 }

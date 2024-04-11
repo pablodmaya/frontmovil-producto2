@@ -1,0 +1,10 @@
+div.inline{
+    display: flex;
+    gap: 10px;
+}
+div.inline label{
+    min-width: fit-content;
+}
+div.inline input, div.inline select{
+    width: -webkit-fill-available;
+}

@@ -1,3 +1,18 @@
-<div class="media" *ngIf="player">
-  <video class="media" src="assets/video/{{ player.video }}" controls autoplay muted></video>
+<div class="modal" id="createPlayers" style="display: block;" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Video del jugador:</h5>
+      </div>
+      <div class="modal-body">
+        <div class="media" *ngIf="player">
+          <video class="media" src="assets/video/{{ player.video }}" controls autoplay muted></video>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeMediaModal()">Cerrar video</button>
+      </div>
+    </div>
+  </div>
 </div>
+<div class="modal-backdrop fade show"></div>
