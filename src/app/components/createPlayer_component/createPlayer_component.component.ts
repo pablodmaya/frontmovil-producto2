@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { Storage, listAll, ref, uploadBytes } from '@angular/fire/storage';
+import { Firestore, collection } from '@angular/fire/firestore';
+import { Storage, getDownloadURL, ref, uploadBytesResumable } from '@angular/fire/storage';
+import { addDoc } from 'firebase/firestore';
 
 @Component({
   standalone: true,
@@ -9,68 +11,135 @@ import { Storage, listAll, ref, uploadBytes } from '@angular/fire/storage';
 })
 
 export class CreatePlayerComponent{
+  allOk = false;
+  namePlayer: string | undefined;
+  surnamePlayer: string | undefined;
+  agePlayer: number | undefined;
+  positionPlayer: string | undefined;
+  pointsPlayer: number | undefined;
+  assistsPlayer: number | undefined;
+  heightPlayer: number | undefined;
+  imgURL: String | undefined;
+  videoURL: String | undefined;  
 
-  imgFileSelected = false;
-  videoFileSelected = false;
   imgFile: File | undefined;
   videoFile: File | undefined;
   imgRef: any;
   videoRef: any;
 
-  constructor(private storage: Storage) {}
+  constructor(private storage: Storage, private firestore: Firestore) {}
+
+  getName(event: Event) {
+    this.namePlayer = (event.target as HTMLInputElement).value;
+    this.actualizarAllOk();
+  }
   
-  onFileImgUpload($event: any){
-    this.imgFile = $event.target.files[0];
+  getSurname(event: any){
+    this.surnamePlayer = (event.target as HTMLInputElement).value;
+    this.actualizarAllOk();
+  }
+  
+  getAge(event: any){
+    this.agePlayer = parseInt(event.target.value, 10);
+    this.actualizarAllOk();
+  }
+  
+  getPosition(event: any){
+    this.positionPlayer = (event.target as HTMLInputElement).value;
+    this.actualizarAllOk();
+  }
+  
+  getPoints(event: any){
+    this.pointsPlayer = parseInt(event.target.value, 10);
+    this.actualizarAllOk();
+  }
+  
+  getAssists(event: any){
+    this.assistsPlayer = parseInt(event.target.value, 10);
+    this.actualizarAllOk();
+  }
+  
+  getHeight(event: any){
+    this.heightPlayer = parseInt(event.target.value, 10);
+    this.actualizarAllOk();
+  }
+  
+  getImage(event: any){
+    this.imgFile = event.target.files[0];
     if(this.imgFile != undefined){
       this.imgRef = ref(this.storage, `assets/images/${this.imgFile.name}`);  
     }else{
       this.imgFile = undefined;
       this.imgRef = undefined;
     }
+    this.actualizarAllOk();
   }
-
-  onFileVideoUpload($event: any){
-    this.videoFile = $event.target.files[0];
+  
+  getVideo(event: any){
+    this.videoFile = event.target.files[0];
     if(this.videoFile != undefined){
       this.videoRef = ref(this.storage, `assets/video/${this.videoFile.name}`);
     }else{
       this.videoFile = undefined;
       this.videoRef = undefined;
     }
+    this.actualizarAllOk();
+  }
+  
+  actualizarAllOk() {
+    this.allOk = (
+      this.namePlayer !== undefined &&
+      this.surnamePlayer !== undefined &&
+      this.agePlayer !== undefined &&
+      this.positionPlayer !== undefined &&
+      this.pointsPlayer !== undefined &&
+      this.assistsPlayer !== undefined &&
+      this.heightPlayer !== undefined &&
+      this.imgFile !== undefined &&
+      this.videoFile !== undefined
+    );
   }
 
-  uploadImages(){
-    if (!this.imgFile || !this.imgRef) {
-      console.error("File or imgRef not available");
+  async uploadPlayer() {
+    if (!this.imgRef || this.imgFile === undefined) {
+      console.error("Imagen no disponible");
       return;
     }
-    uploadBytes(this.imgRef, this.imgFile)
-      .then(res => {
-        console.log("Imagen subida con exito.", res);
-        this.imgFile = undefined;
-        this.imgRef = undefined;
-        this.imgFileSelected = false;
-      })
-      .catch(e => console.error("Fallo al subir la imagen: ", e))
-  }
-
-  uploadVideo(){
-    if (!this.videoFile || !this.videoRef) {
-      console.error("File or imgRef not available");
+    if (!this.videoRef || this.videoFile === undefined) {
+      console.error("Video no disponible");
       return;
     }
-    uploadBytes(this.videoRef, this.videoFile)
-      .then(res => {
-        console.log("Video subido con exito.", res);
-        this.videoFile = undefined;
-        this.videoRef = undefined;
-        this.videoFileSelected = false;
-      })
-      .catch(e => console.error("Fallo al subir el video: ", e))
+    try {
+      //Subimos la imagen
+      const imgBlob = this.imgFile;
+      const imgSnapshot = await uploadBytesResumable(this.imgRef, imgBlob);
+      this.imgURL = await getDownloadURL(imgSnapshot.ref);
+      //Subimos el video
+      const videoBlob = this.videoFile;
+      const videoSnapshot = await uploadBytesResumable(this.videoRef, videoBlob);
+      this.videoURL = await getDownloadURL(videoSnapshot.ref);
+      //Subimos el jugador a la BBDD
+      const playerCollection = collection(this.firestore, 'players');
+      const playerData = {
+          name: this.namePlayer,
+          surname: this.surnamePlayer,
+          age: this.agePlayer,
+          position: this.positionPlayer,
+          points: this.pointsPlayer,
+          assists: this.assistsPlayer,
+          height: this.heightPlayer,
+          photo: this.imgURL,
+          video: this.videoURL
+      };
+      addDoc(playerCollection, playerData);
+    } catch (error) {
+      console.error("Error al subir video o la imagen.", error);
+      throw error;
+    }
+    this.closeCreatePlayer.emit(false);
   }
-
+  
   @Output() closeCreatePlayer = new EventEmitter();
-
   closeCreatePlayerModal() {
     this.closeCreatePlayer.emit(false);
   }

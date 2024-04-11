@@ -15,7 +15,7 @@ import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
-    ageFilterPipe, // Declara tu pipe aquí
+    ageFilterPipe,
     nameFilterPipe,
     positionFilterPipe
   ],
@@ -23,7 +23,6 @@ import { CommonModule } from '@angular/common';
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
-    //BrowserModule,
     CommonModule,
     FirestoreModule,
     AngularFireDatabaseModule,

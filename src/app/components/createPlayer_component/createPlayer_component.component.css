@@ -1,10 +1,11 @@
-div.inline{
-    display: flex;
-    gap: 10px;
+.btn:disabled{
+    background-color: #c0c0c0;
+    border-color: #c9c9c9;
+    cursor: not-allowed;
 }
-div.inline label{
-    min-width: fit-content;
+input:invalid, select:invalid{
+    border: #c45f5f 2px solid
 }
-div.inline input, div.inline select{
-    width: -webkit-fill-available;
+input:valid, select:valid {
+    border: #7ac45f 2px solid;
 }

@@ -25,7 +25,7 @@ import { CreatePlayerComponent } from '../createPlayer_component/createPlayer_co
     PlayerComponent,
     AppModule,
     CommonModule,
-    CreatePlayerComponent
+    CreatePlayerComponent,
   ],
 })
 export class PlayersListComponent {
