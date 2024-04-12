@@ -4,6 +4,27 @@
     height:auto;
     display: block;
 }
+.media .buttonInVideo {
+    position: absolute;
+    bottom: 80px;
+    left: 139px;
+    height: auto;
+    background: none;
+    fill: white;
+    padding: 0.5rem;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+  
+.media:hover .buttonInVideo {
+opacity: 1;
+transition: opacity 0.5s;
+}
+
+.buttonInVideo:hover {
+background: #4949499e;
+}
 .progressBar{
     width: auto;
     height: 5px;
