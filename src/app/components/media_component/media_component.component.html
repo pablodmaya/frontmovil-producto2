@@ -6,7 +6,45 @@
       </div>
       <div class="modal-body">
         <div class="media" *ngIf="player">
-          <video class="media" src="{{ player.video }}" controls autoplay muted></video>
+          <video class="media" #media>
+            <source [src]="player?.video">
+          </video>
+        </div>
+        <div class="controls" >
+          <button (click)="playVid()" type="button">Play Video</button>
+          <button (click)="pauseVid()" type="button">Pause Video</button>
+          <div class="video-container__controls"> 
+            <div class="progress">
+              <div class="progress__current"></div>
+            </div>
+            <button class="control control--backward">
+              <i class="fas fa-backward"></i>
+            </button>
+            <button class="control control--play paused">
+              <i class="fas fa-play"></i>
+              <i class="fas fa-pause"></i>
+            </button>
+            <button class="control control--stop">
+              <i class="fas fa-stop"></i>
+            </button>
+            <button class="control control--forward">
+              <i class="fas fa-forward"></i>
+            </button>
+            <button class="control control--replay">
+              <i class="fas fa-sync"></i>
+            </button>
+            <button class="control control--volume">
+              <div class="control--volume__button">
+                <i class="fas fa-volume-off"></i>
+                <i class="fas fa-volume-up"></i>
+              </div>
+              <input class="control--volume__slider" value="1" type="range" min="0" max="1" step="0.01">
+            </button>
+            <button class="control control--fullscreen">
+              <i class="fas fa-expand"></i>
+              <i class="fas fa-compress"></i>
+            </button>
+          </div>
         </div>
       </div>
       <div class="modal-footer">
