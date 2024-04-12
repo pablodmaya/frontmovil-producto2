@@ -8,8 +8,8 @@ import { environment } from '../environments/environment';
 import { ReactiveFormsModule } from '@angular/forms';
 import { provideStorage,getStorage } from '@angular/fire/storage';
 import { FormsModule } from '@angular/forms';
-import { ageFilterPipe } from './pipes/age.filter.pipe'; // Importa tu pipe aquí
-import { nameFilterPipe } from './pipes/name.filter.pipe'; // Importa el nuevo pipe aquí
+import { ageFilterPipe } from './pipes/age.filter.pipe';
+import { nameFilterPipe } from './pipes/name.filter.pipe';
 import { positionFilterPipe } from './pipes/position.filter.pipe';
 import { CommonModule } from '@angular/common';
 
