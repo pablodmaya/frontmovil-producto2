@@ -30,3 +30,13 @@
         padding: 0;
     }
 }
+.edit-button{
+    align-self: center;
+    cursor: pointer;
+    margin: auto;
+    display: block;
+}
+.edit-button svg{
+    width: 20px;
+    height: 20px;
+}

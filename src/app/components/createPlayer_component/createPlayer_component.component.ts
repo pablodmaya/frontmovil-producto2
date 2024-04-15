@@ -2,68 +2,52 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { Firestore, collection } from '@angular/fire/firestore';
 import { Storage, getDownloadURL, ref, uploadBytesResumable } from '@angular/fire/storage';
 import { addDoc } from 'firebase/firestore';
+import { NgIf } from '@angular/common';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   standalone: true,
   selector: 'app_createPlayer_component',
   templateUrl: './createPlayer_component.component.html',
-  styleUrls: ['./createPlayer_component.component.css']
+  styleUrls: ['./createPlayer_component.component.css'],
+  imports: [NgIf,ReactiveFormsModule]
 })
 
 export class CreatePlayerComponent{
-  allOk = false;
-  namePlayer: string | undefined;
-  surnamePlayer: string | undefined;
-  agePlayer: number | undefined;
-  positionPlayer: string | undefined;
-  pointsPlayer: number | undefined;
-  assistsPlayer: number | undefined;
-  heightPlayer: number | undefined;
-  imgURL: String | undefined;
-  videoURL: String | undefined;  
+  @Output() closeCreatePlayer = new EventEmitter();
 
+  form!: FormGroup;
+  formCompleted: boolean = false;
+  blueButtonPress: boolean = false;
   imgFile: File | undefined;
   videoFile: File | undefined;
   imgRef: any;
-  videoRef: any;
+  videoRef: any;  
+  imgURL: String | undefined;
+  videoURL: String | undefined;  
+  constructor(private storage: Storage, private firestore: Firestore) {
+    this.form = new FormGroup({
+      name: new FormControl('', Validators.required),
+      surname: new FormControl('', Validators.required),
+      placeOfBirth: new FormControl('', Validators.required),
+      age: new FormControl('', Validators.required),
+      lastTeam: new FormControl('', Validators.required),
+      lastLeagueSport: new FormControl('', Validators.required),
+      position: new FormControl('', Validators.required),
+      points: new FormControl('', Validators.required),
+      assists: new FormControl('', Validators.required),
+      height: new FormControl('', Validators.required),
+      onFileImgUpload: new FormControl('', Validators.required),
+      onFileVideoUpload: new FormControl('', Validators.required)
+    });
+  }
 
-  constructor(private storage: Storage, private firestore: Firestore) {}
+  //Generador de ID unico para jugador
+  generateUniqueId(): string {
+    const timestamp = new Date().getTime();
+    return timestamp.toString(16);
+  }
 
-  getName(event: Event) {
-    this.namePlayer = (event.target as HTMLInputElement).value;
-    this.actualizarAllOk();
-  }
-  
-  getSurname(event: any){
-    this.surnamePlayer = (event.target as HTMLInputElement).value;
-    this.actualizarAllOk();
-  }
-  
-  getAge(event: any){
-    this.agePlayer = parseInt(event.target.value, 10);
-    this.actualizarAllOk();
-  }
-  
-  getPosition(event: any){
-    this.positionPlayer = (event.target as HTMLInputElement).value;
-    this.actualizarAllOk();
-  }
-  
-  getPoints(event: any){
-    this.pointsPlayer = parseInt(event.target.value, 10);
-    this.actualizarAllOk();
-  }
-  
-  getAssists(event: any){
-    this.assistsPlayer = parseInt(event.target.value, 10);
-    this.actualizarAllOk();
-  }
-  
-  getHeight(event: any){
-    this.heightPlayer = parseInt(event.target.value, 10);
-    this.actualizarAllOk();
-  }
-  
   getImage(event: any){
     this.imgFile = event.target.files[0];
     if(this.imgFile != undefined){
@@ -72,7 +56,6 @@ export class CreatePlayerComponent{
       this.imgFile = undefined;
       this.imgRef = undefined;
     }
-    this.actualizarAllOk();
   }
   
   getVideo(event: any){
@@ -83,32 +66,30 @@ export class CreatePlayerComponent{
       this.videoFile = undefined;
       this.videoRef = undefined;
     }
-    this.actualizarAllOk();
-  }
-  
-  actualizarAllOk() {
-    this.allOk = (
-      this.namePlayer !== undefined &&
-      this.surnamePlayer !== undefined &&
-      this.agePlayer !== undefined &&
-      this.positionPlayer !== undefined &&
-      this.pointsPlayer !== undefined &&
-      this.assistsPlayer !== undefined &&
-      this.heightPlayer !== undefined &&
-      this.imgFile !== undefined &&
-      this.videoFile !== undefined
-    );
   }
 
+  //Comprobación de inputs
+  checkInputs() {
+    if (this.form.valid) {
+      this.formCompleted = true;
+    } else {
+      this.formCompleted = false;
+    }
+  }
+  //Subir jugador a la base de datos.
   async uploadPlayer() {
+    this.blueButtonPress = true;
     if (!this.imgRef || this.imgFile === undefined) {
-      console.error("Imagen no disponible");
+      alert("Imagen no disponible");
+      this.closeCreatePlayer.emit(false);
       return;
     }
     if (!this.videoRef || this.videoFile === undefined) {
-      console.error("Video no disponible");
+      alert("Video no disponible");
+      this.closeCreatePlayer.emit(false);
       return;
     }
+    //Subimos los datos
     try {
       //Subimos la imagen
       const imgBlob = this.imgFile;
@@ -121,25 +102,27 @@ export class CreatePlayerComponent{
       //Subimos el jugador a la BBDD
       const playerCollection = collection(this.firestore, 'players');
       const playerData = {
-          name: this.namePlayer,
-          surname: this.surnamePlayer,
-          age: this.agePlayer,
-          position: this.positionPlayer,
-          points: this.pointsPlayer,
-          assists: this.assistsPlayer,
-          height: this.heightPlayer,
+          id: this.generateUniqueId(),
+          name: this.form.get('name')?.value,
+          surname: this.form.get('surname')?.value,
+          age: this.form.get('age')?.value,
+          placeOfBirth: this.form.get('placeOfBirth')?.value,
+          position: this.form.get('position')?.value,
+          lastTeam: this.form.get('lastTeam')?.value,
+          lastLeagueSport: this.form.get('lastLeagueSport')?.value,
+          points: this.form.get('points')?.value,
+          assists: this.form.get('assists')?.value,
+          height: this.form.get('height')?.value,
           photo: this.imgURL,
           video: this.videoURL
       };
       addDoc(playerCollection, playerData);
     } catch (error) {
-      console.error("Error al subir video o la imagen.", error);
-      throw error;
+      alert("Error al crear el objeto del jugador: " + error);
+    }finally{
+      this.closeCreatePlayer.emit(false);
     }
-    this.closeCreatePlayer.emit(false);
   }
-  
-  @Output() closeCreatePlayer = new EventEmitter();
   closeCreatePlayerModal() {
     this.closeCreatePlayer.emit(false);
   }

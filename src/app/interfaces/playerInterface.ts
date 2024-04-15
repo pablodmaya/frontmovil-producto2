@@ -1,12 +1,15 @@
 export interface PlayerInterface {
-    id: number;
-    photo: string;
-    name: string;
-    surname: string,
-    position: string,
-    age: number,
-    height: number,
-    video: string,
-    points: number,
-    assists: number,
-  }
+  id: string;  
+  name: string;
+  surname: string;
+  placeOfBirth: string;
+  age: number;
+  position: string;
+  lastTeam: string;
+  lastLeagueSport: string;
+  points: number;
+  assists: number;
+  height: number;
+  photo: string;
+  video: string;
+}

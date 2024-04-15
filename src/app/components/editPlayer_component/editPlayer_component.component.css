@@ -1,0 +1,25 @@
+@media (min-width: 1000px){
+    .modal-dialog {
+        max-width: 900px;
+        width: calc(100% - 300px);
+    }
+    form{
+        display: flex;
+        gap: 20px;
+    }
+}
+
+form .column{
+    width: -webkit-fill-available;
+}
+.btn:disabled{
+    background-color: #c0c0c0;
+    border-color: #c9c9c9;
+    cursor: not-allowed;
+}
+input:invalid, select:invalid{
+    border: #c45f5f 2px solid
+}
+input:valid, select:valid {
+    border: #7ac45f 2px solid;
+}

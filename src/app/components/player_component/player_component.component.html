@@ -1,26 +1,29 @@
 <div class="playercontainer">
   <div class="player">
-    <img src="{{ player?.photo }}" alt="{{ player?.name }}" />
-    <span class="name">{{ player?.name }} {{ player?.surname }}</span>
-
-    <!-- Icono mejorable de borrado (papelera) -->
-    <span class="delete-icon" *ngIf="player" (click)="onDelete(player)">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
-        <path
-          d="M17.833 3H14.5l-.48-1.145A1.5 1.5 0 0 0 12.646 1H11.354a1.5 1.5 0 0 0-1.373.855L9.5 3H6.167a.5.5 0 0 0-.5.5v.5h12V3.5a.5.5 0 0 0-.5-.5zM5.5 21c0 1.381 1.12 2.5 2.5 2.5h8c1.381 0 2.5-1.12 2.5-2.5V7H5.5v14zM16 9h-1v10h1V9zm-4 0h-1v10h1V9zm-4 0H7v10h1V9z"
-          fill="#0F0F0F"
-        />
-      </svg>
-    </span>
-
-    <span (click)="onSelect()">
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M5.70711 9.71069C5.31658 10.1012 5.31658 10.7344 5.70711 11.1249L10.5993 16.0123C11.3805 16.7927 12.6463 16.7924 13.4271 16.0117L18.3174 11.1213C18.708 10.7308 18.708 10.0976 18.3174 9.70708C17.9269 9.31655 17.2937 9.31655 16.9032 9.70708L12.7176 13.8927C12.3271 14.2833 11.6939 14.2832 11.3034 13.8927L7.12132 9.71069C6.7308 9.32016 6.09763 9.32016 5.70711 9.71069Z"
-          fill="#0F0F0F"
-        />
-      </svg>
-    </span>
+    <div class="img">
+      <img src="{{ player?.photo }}" alt="{{ player?.name }}" />
+    </div>
+    <div class="littleDetail">
+      <span><b>Nombre completo: </b>{{ player?.name }} {{ player?.surname }}</span>
+      <span><b>Última liga:</b> {{player?.lastLeagueSport}}</span>
+      <span><b>Último equipo:</b> {{player?.lastTeam}}</span>
+    </div>
+    <div class="inline">
+      <span class="delete-icon" (click)="onDelete()" *ngIf="player">
+        <svg viewBox="0 0 512 512" xml:space="preserve">
+          <path d="M331.636,69.818V0H180.364v69.818h-128v128h34.909V512h337.455V197.818h34.909v-128H331.636z M215.273,34.909h81.45 v34.909h-81.455V34.909z M389.818,477.091H122.182V197.818h267.636V477.091z M424.727,162.909H87.273v-58.182h337.455V162.909z"/>
+          <rect x="168.727" y="256" width="34.909" height="162.909"/>
+          <rect x="308.364" y="256" width="34.909" height="162.909"/>
+          <rect x="238.545" y="256" width="34.909" height="162.909"/>
+        </svg>
+      </span>
+      <span class="detail-icon" (click)="onDetail()" [style]="{'transform': detailOpen ? 'rotate(180deg)' : 'rotate(0deg)', 'transition': 'all 0.5s ease 0s'}">
+        <svg viewBox="0 0 24 24" fill="#00000" xmlns="http://www.w3.org/2000/svg">
+          <path d="m 0.62080143,6.1076132 c -0.70556602,0.7055298 -0.70556602,1.849525 0,2.5550368 l 8.83866297,8.830008 c 1.4113846,1.40994 3.6982916,1.409398 5.1089536,-0.0011 l 8.835248,-8.8354282 c 0.705693,-0.7055118 0.705693,-1.8495068 0,-2.5550548 -0.705512,-0.705566 -1.849507,-0.705566 -2.555019,0 l -7.562075,7.562111 c -0.705511,0.705692 -1.849506,0.705512 -2.555018,0 L 3.1758382,6.1076132 c -0.7055479,-0.705566 -1.8494888,-0.705566 -2.55503677,0 z"/>
+        </svg>        
+      </span>
+    </div>
   </div>
-  <app_detail_component *ngIf="open" [player]="player"></app_detail_component>
+  <app_detail_component *ngIf="detailOpen" [player]="player"></app_detail_component>
+  <app_deletePlayer_component *ngIf="deletePlayer" [player]="player" (closeDeletePlayer)="deletePlayer = false"></app_deletePlayer_component>
 </div>

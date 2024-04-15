@@ -28,7 +28,8 @@ import { CommonModule } from '@angular/common';
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    FormsModule 
   ],
   providers: [],
   bootstrap: [AppComponent],

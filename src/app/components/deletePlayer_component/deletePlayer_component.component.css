@@ -1,29 +1,49 @@
-@media (min-width: 1000px){
-    .modal-dialog {
-        max-width: 900px;
-        width: calc(100% - 300px);
-    }
-    form{
-        display: flex;
-        gap: 20px;
+.detail {
+    background-color: white;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-radius: 8px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+
+    @media screen and (max-width: 600px) {
+        display: block;
     }
 }
 
-form .column{
-    width: -webkit-fill-available;
-}
-.btn:disabled{
-    background-color: #c0c0c0;
-    border-color: #c9c9c9;
-    cursor: not-allowed;
-}
-input:invalid, select:invalid{
-    border: #c45f5f 2px solid
-}
-input:valid, select:valid {
-    border: #7ac45f 2px solid;
+.showVideo {
+    background: #008eff;
+    color: white;
+    font-weight: bold;
+
+    @media screen and (max-width: 600px) {
+        margin: auto;
+        display: block;
+    }
 }
 
+.listDetail {
+    @media screen and (max-width: 600px) {
+        margin: 2rem auto 0.5rem;
+        width: fit-content;
+        padding: 0;
+    }
+}
+
+.edit-button {
+    align-self: center;
+    cursor: pointer;
+    margin: auto;
+    display: block;
+}
+
+.edit-button svg {
+    width: 20px;
+    height: 20px;
+}
 
 .onChange{
     color: white;
