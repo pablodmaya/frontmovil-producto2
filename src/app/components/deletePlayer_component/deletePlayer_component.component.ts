@@ -24,12 +24,12 @@ export class DeletePlayerComponent {
     console.log('Borrando jugador:', player);
     // Aquí puedes realizar las operaciones de eliminación del jugador
     try {
+       console.log("ESte es el player id" + player.id);
       const querySnapshot = await getDocs(
         query(
           collection(this.firestore, 'players'),
-          where('name', '==', player.name),
-          where('surname', '==', player.surname)
-        )
+            where('id', '==' , player.id)
+      )
       );
       if (!querySnapshot.empty) {
         const docToDelete = querySnapshot.docs[0];
