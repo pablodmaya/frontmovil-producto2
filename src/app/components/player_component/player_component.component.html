@@ -25,5 +25,5 @@
     </div>
   </div>
   <app_detail_component *ngIf="detailOpen" [player]="player"></app_detail_component>
-  <app_deletePlayer_component *ngIf="deletePlayer" [player]="player" (closeDeletePlayer)="deletePlayer = false"></app_deletePlayer_component>
+  <app_deletePlayer_component *ngIf="deletePlayer" [player]="player" (closeDeletePlayerOutput)="deletePlayer = false"></app_deletePlayer_component>
 </div>

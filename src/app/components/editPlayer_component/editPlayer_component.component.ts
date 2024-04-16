@@ -1,9 +1,9 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { Firestore, collection } from '@angular/fire/firestore';
-import { Storage, deleteObject, getDownloadURL, ref, uploadBytesResumable } from '@angular/fire/storage';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { Firestore,collection,query,where,getDocs,doc,updateDoc } from '@angular/fire/firestore';
+import { Storage, deleteObject, getDownloadURL, uploadBytesResumable } from '@angular/fire/storage';
 import { PlayerInterface } from '../../interfaces/playerInterface';
 import { NgIf } from '@angular/common';
+import { ref } from '@angular/fire/storage';
 
 @Component({
   standalone: true,
@@ -33,8 +33,8 @@ export class EditPlayerComponent{
   pointsPlayer: number | undefined;
   assistsPlayer: number | undefined;
   heightPlayer: number | undefined;
-  imgURL: String | undefined;
-  videoURL: String | undefined;
+  imgURLPlayer: String | undefined;
+  videoURLPlayer: String | undefined;
 
   @ViewChild('name') name!: ElementRef;
   @ViewChild('surname') surname!: ElementRef;
@@ -156,7 +156,9 @@ export class EditPlayerComponent{
         //Subimos la nueva
         const imgBlob = this.imgFile;
         const imgSnapshot = await uploadBytesResumable(this.imgRef, imgBlob);
-        this.imgURL = await getDownloadURL(imgSnapshot.ref);
+        this.imgURLPlayer = await getDownloadURL(imgSnapshot.ref);
+      }else{
+        this.imgURLPlayer = this.player?.photo;
       }
       //Eliminamos el video antiguo y subimos la nuevo si el usuario quiere cambiarla
       if(this.videoCheckbox){
@@ -178,19 +180,10 @@ export class EditPlayerComponent{
         });
         const videoBlob = this.videoFile;
         const videoSnapshot = await uploadBytesResumable(this.videoRef, videoBlob);
-        this.videoURL = await getDownloadURL(videoSnapshot.ref);        
+        this.videoURLPlayer = await getDownloadURL(videoSnapshot.ref);        
+      }else{
+        this.videoURLPlayer = this.player?.video;
       }
-      const collectionRef = collection(this.firestore, 'players');
-      const playerDocRef = doc(collectionRef, this.player?.id);
-      getDoc(playerDocRef).then((doc) => {
-        if (doc.exists()) {
-          console.log("Document data:", doc.data());
-        } else {
-          console.log("No such document!");
-        }
-      }).catch((error) => {
-        console.log("Error getting document:", error);
-      });
       const playerData = {
         name: this.namePlayer,
         surname: this.surnamePlayer,
@@ -202,16 +195,12 @@ export class EditPlayerComponent{
         points: this.pointsPlayer,
         assists: this.assistsPlayer,
         height: this.heightPlayer,
-        photo: this.imgURL,
-        video: this.videoURL
+        photo: this.imgURLPlayer,
+        video: this.videoURLPlayer
       };
-      // Check if the player already exists
-      const playerSnapshot = await getDoc(playerDocRef);
-      if (playerSnapshot.exists()) {
-        await updateDoc(playerDocRef, playerData);
-        console.log('Jugador actualizado con exito!');
-      } else {
-        console.error('El jugador no existe!' + this.player?.id);
+      const querySnapshot = await getDocs(query(collection(this.firestore, 'players'),where('id', '==' , this.player?.id)));
+      if (!querySnapshot.empty) {
+        await updateDoc(doc(this.firestore, 'players', querySnapshot.docs[0].id), playerData);
       }
     } catch (error) {
       console.error("Error al actualizar el jugador.", error);
@@ -220,8 +209,6 @@ export class EditPlayerComponent{
     this.closeEdit.emit(false);      
     }
   }
-  
-  
   closeEditPlayerModal() {
     this.closeEdit.emit(false);
   }
