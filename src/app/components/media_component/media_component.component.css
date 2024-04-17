@@ -1,0 +1,63 @@
+.media{
+    background-color:white;
+    max-width:100%;
+    height:auto;
+    display: block;
+}
+.media .buttonInVideo {
+    position: absolute;
+    bottom: 80px;
+    left: 139px;
+    height: auto;
+    background: none;
+    fill: white;
+    padding: 0.5rem;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+  
+.media:hover .buttonInVideo {
+opacity: 1;
+transition: opacity 0.5s;
+}
+
+.buttonInVideo:hover {
+background: #4949499e;
+}
+.progressBar{
+    width: auto;
+    height: 5px;
+    background: #d1d1d1;
+}
+.bar{
+    height: 5px;
+    background: red;
+}
+button.control-icon {
+    padding: 0.5rem;
+    margin: 0;
+    height: -webkit-fill-available;
+}
+button.control-icon:hover{
+    background: #d6d6d6;
+}
+.controls{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    margin-top: 10px;
+}
+.grup{
+    background: #ededed;
+    display: flex;
+    width: fit-content;
+    padding-right: 10px;
+}
+.time{
+    width: 140px;
+    white-space: nowrap;
+}
+input.volume{
+    width: calc(100% - 10px);
+}

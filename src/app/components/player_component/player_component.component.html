@@ -1,0 +1,29 @@
+<div class="playercontainer">
+  <div class="player">
+    <div class="img">
+      <img src="{{ player?.photo }}" alt="{{ player?.name }}" />
+    </div>
+    <div class="littleDetail">
+      <span><b>Nombre completo: </b>{{ player?.name }} {{ player?.surname }}</span>
+      <span><b>Última liga:</b> {{player?.lastLeagueSport}}</span>
+      <span><b>Último equipo:</b> {{player?.lastTeam}}</span>
+    </div>
+    <div class="inline">
+      <span class="delete-icon" (click)="onDelete()" *ngIf="player">
+        <svg viewBox="0 0 512 512" xml:space="preserve">
+          <path d="M331.636,69.818V0H180.364v69.818h-128v128h34.909V512h337.455V197.818h34.909v-128H331.636z M215.273,34.909h81.45 v34.909h-81.455V34.909z M389.818,477.091H122.182V197.818h267.636V477.091z M424.727,162.909H87.273v-58.182h337.455V162.909z"/>
+          <rect x="168.727" y="256" width="34.909" height="162.909"/>
+          <rect x="308.364" y="256" width="34.909" height="162.909"/>
+          <rect x="238.545" y="256" width="34.909" height="162.909"/>
+        </svg>
+      </span>
+      <span class="detail-icon" (click)="onDetail()" [style]="{'transform': detailOpen ? 'rotate(180deg)' : 'rotate(0deg)', 'transition': 'all 0.5s ease 0s'}">
+        <svg viewBox="0 0 24 24" fill="#00000" xmlns="http://www.w3.org/2000/svg">
+          <path d="m 0.62080143,6.1076132 c -0.70556602,0.7055298 -0.70556602,1.849525 0,2.5550368 l 8.83866297,8.830008 c 1.4113846,1.40994 3.6982916,1.409398 5.1089536,-0.0011 l 8.835248,-8.8354282 c 0.705693,-0.7055118 0.705693,-1.8495068 0,-2.5550548 -0.705512,-0.705566 -1.849507,-0.705566 -2.555019,0 l -7.562075,7.562111 c -0.705511,0.705692 -1.849506,0.705512 -2.555018,0 L 3.1758382,6.1076132 c -0.7055479,-0.705566 -1.8494888,-0.705566 -2.55503677,0 z"/>
+        </svg>        
+      </span>
+    </div>
+  </div>
+  <app_detail_component *ngIf="detailOpen" [player]="player"></app_detail_component>
+  <app_deletePlayer_component *ngIf="deletePlayer" [player]="player" (closeDeletePlayerOutput)="deletePlayer = false"></app_deletePlayer_component>
+</div>

@@ -1,0 +1,30 @@
+<div class="modal" id="createPlayers" style="display: block;" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <ng-container *ngIf="!blueButtonPress; else loading">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Eliminar jugador:</h5>
+        </div>
+        <div class="modal-body">
+          <p>¿Realmente deseas eliminar el jugador <b>{{ player?.name }} {{ player?.surname }}</b>?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="player && onDelete(player)">Eliminar jugador</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeDeletePlayer()">Cerrar</button>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #loading>
+      <div class="onChange">
+        <p>Realizando operación, espere ...</p>
+        <div class="lds-ring">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>
+<div class="modal-backdrop fade show"></div>

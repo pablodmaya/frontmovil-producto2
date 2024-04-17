@@ -1,0 +1,51 @@
+.playercontainer {
+    background-color: rgb(209, 209, 209);
+    border-radius: 8px;
+    margin-bottom: 25px;
+}
+
+.player {
+    display: grid;
+    grid-template-columns: 120px auto 50px;
+    align-items: center;
+    margin: auto 35px;
+    padding-top: 1rem;
+    gap: 25px;
+    @media screen and (max-width: 600px) {
+        grid-template-columns: auto;
+        padding: 1rem;
+        gap: 25px;
+        justify-items: center;
+    }
+}
+.player .img{
+    display: block;
+    width: 100px;
+    height: 100px;
+    align-content: center;
+}
+
+.player img {
+    display: block;
+    width: -webkit-fill-available;
+}
+
+.player svg{
+    width: 2rem;
+    cursor: pointer;
+}
+
+.inline{
+    display: flex;
+    gap: 10px;
+}
+
+.inline svg{
+    width: 20px;
+    height: 20px;
+}
+
+.littleDetail{
+    display: grid;
+    margin: 0 0 10px;
+}

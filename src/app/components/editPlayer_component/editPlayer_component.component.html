@@ -1,0 +1,98 @@
+<div class="modal" id="createPlayers" style="display: block;" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <ng-container *ngIf="!blueButtonPress; else loading">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Editar jugador:</h5>
+        </div>
+        <div class="modal-body">
+          <form id="player-form" (change)="uploadData()">
+            <div class="column">
+              <div class="mb-3">
+                <label for="name">Nombre:*</label>
+                <input type="text" class="form-control" [value]="player?.name" #name name="name" required>
+              </div>
+              <div class="mb-3">
+                <label for="surname">Apellido:*</label>
+                <input type="text" class="form-control" [value]="player?.surname" #surname name="surname" required>
+              </div>
+              <div class="mb-3">
+                <label for="placeOfBirth">Lugar de nacimiento:*</label>
+                <input type="text" class="form-control" [value]="player?.placeOfBirth" #placeOfBirth name="placeOfBirth" required>
+              </div>
+              <div class="mb-3">
+                <label for="age">Edad:*</label>
+                <input type="number" class="form-control" [value]="player?.age" #age name="age" required>
+              </div>
+              <div class="mb-3">
+                <label for="lastTeam">Último equipo:*</label>
+                <input type="text" class="form-control" [value]="player?.lastTeam" #lastTeam name="lastTeam" required>
+              </div>
+              <div class="mb-3">
+                <label for="lastLeagueSport">Última liga:*</label>
+                <input type="text" class="form-control" [value]="player?.lastLeagueSport" #lastLeagueSport name="lastLeagueSport" required>
+              </div>
+            </div>
+            <div class="column">
+              <div class="mb-3">
+                <label for="position">Posición:*</label>
+                <select class="form-control" #position [value]="player?.position" name="position" required>
+                  <option disabled [selected]="!player?.position" value="">Elige una opción</option>
+                  <option value="Base">Base</option>
+                  <option value="Escolta">Escolta</option>
+                  <option value="Alero">Alero</option>
+                  <option value="Pivot">Pivot</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="points">Puntos por partido:*</label>
+                <input type="number" class="form-control" [value]="player?.points" #points name="points" required>
+              </div>
+              <div class="mb-3">
+                <label for="assists">Asistencias:*</label>
+                <input type="number" class="form-control" [value]="player?.assists" #assists name="assists" required>
+              </div>
+              <div class="mb-3">
+                <label for="height">Altura:*</label>
+                <input type="number" class="form-control" [value]="player?.height" #height name="height" required>
+              </div>
+              <div class="mb-3">
+                <div>            
+                  <label for="onFileImgUpload">*Imagen actual:</label>
+                  <a [href]="player?.photo" target="_blank"> Ver imagen</a>
+                  <span>  - Cambiar Imagen: </span>
+                  <input type="checkbox" #imageCheck (change)="onImageCheckChange(imageCheck.checked)">                
+                </div>
+                <input type="file" class="form-control" [disabled]="!imageCheck.checked" #onFileImgUpload name="onFileImgUpload" accept="image/png, image/jpeg" (change)="getImage($event)" required>
+              </div>
+              <div class="mb-3">
+                <label for="onFileVideoUpload">*Video actual:</label>
+                <a [href]="player?.video" target="_blank"> Ver video</a>
+                <span>  - Cambiar Video: </span>
+                <input type="checkbox" #videoCheck (change)="onVideoCheckChange(videoCheck.checked)">
+                <input type="file" class="form-control" [disabled]="!videoCheck.checked" #onFileVideoUpload name="onFileVideoUpload" accept="video/mp4" (change)="getVideo($event)" required>
+              </div>
+            </div>
+          </form>
+          <p>* Campo obligatorio.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="uploadButton" [disabled]="!formCompleted" (click)="uploadPlayer()">Modificar jugador</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeEditPlayerModal()">Cerrar</button>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #loading>
+      <div class="onChange">
+        <p>Realizando operación, espere ...</p>
+        <div class="lds-ring">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>
+<div class="modal-backdrop fade show"></div>
